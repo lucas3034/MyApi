@@ -3,6 +3,10 @@ const User = require('./user');
 
 class UserController {
   createUser(name, email, password) {
+    const existingUser = userRepository.getUserByEmail(email);
+    if (existingUser) {
+      throw new Error('User with this email already exists');
+    }
     const newUser = new User(name, email, password);
     userRepository.addUser(newUser);
     return newUser;
