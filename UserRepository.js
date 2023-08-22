@@ -1,21 +1,23 @@
-class Repository {
+const User = require('./user');
+
+class UserRepository {
   constructor() {
     this.users = [];
   }
 
-  add(user) {
+  addUser(user) {
     this.users.push(user);
   }
 
-  get() {
+  getUsers() {
     return this.users;
   }
 
-  findByEmail(email) {
+  getUserByEmail(email) {
     return this.users.find(user => user.email === email);
   }
 
-  delete(email) {
+  deleteUser(email) {
     const index = this.users.findIndex(user => user.email === email);
     if (index !== -1) {
       this.users.splice(index, 1);
@@ -24,8 +26,8 @@ class Repository {
     return false;
   }
 
-  edit(email, newData) {
-    const user = this.findByEmail(email);
+  updateUser(email, newData) {
+    const user = this.getUserByEmail(email);
     if (user) {
       Object.assign(user, newData);
       return true;
@@ -34,4 +36,4 @@ class Repository {
   }
 }
 
-module.exports = new Repository();
+module.exports = new UserRepository();

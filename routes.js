@@ -1,5 +1,5 @@
 const express = require('express');
-const userController = require('./controller');
+const userController = require('./userController');
 
 const router = express.Router();
 
@@ -9,14 +9,14 @@ router.post('/users', (req, res) => {
   res.status(201).json(newUser);
 });
 
-router.get('/users', (res) => {
+router.get('/users', (req, res) => {
   const users = userController.getAllUsers();
   res.json(users);
 });
 
 router.delete('/users/:email', (req, res) => {
   const { email } = req.params;
-  const deleted = userController.delete(email);
+  const deleted = userController.deleteUser(email);
   if (deleted) {
     res.sendStatus(204);
   } else {
@@ -27,7 +27,7 @@ router.delete('/users/:email', (req, res) => {
 router.put('/users/:email', (req, res) => {
   const { email } = req.params;
   const newData = req.body;
-  const updated = userController.edit(email, newData);
+  const updated = userController.updateUser(email, newData);
   if (updated) {
     res.sendStatus(204);
   } else {
